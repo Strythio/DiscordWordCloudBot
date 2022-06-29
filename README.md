@@ -1,5 +1,10 @@
 Generates wordclouds for a discord server.
 
+IMPORTANT:
+You must fill in three fields at the beginning of wordclouds_bot.py
+Also, if you want, you can adjust the settings for the wordcloud generation by editing the config vars at the beginning of wordcloud_gen.py.
+
+
 This is not really a bot, so much as it is a message downloader.
 
 1) Create a python virtual environment, python 3.7+

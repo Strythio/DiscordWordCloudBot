@@ -7,10 +7,13 @@ from wordcloud_gen import generate_word_clouds
 from spamDetector import calc_spam_probability
 import random
 
-#Fill in these three things, or you won't be able to use the bot
-discord_api_key = ''
-bot_owner_id = 0
-bot_owners_username = ''
+##Fill in these three things, or you won't be able to use the bot
+#Discord API Key...
+discord_api_key = '<YOUR DISCORD API KEY>'
+#This is your discord member ID. Only this person will be able to issue commands to the bot
+bot_owner_id = 0000000000000000
+#Your discord screen name.
+bot_owners_username = '' #Strythio, for example
 
 #This is so the bot can tell everybody how great you are when they try to use it (they can't)
 owner_titles = [
@@ -87,6 +90,11 @@ async def ingest_messages(ctx):
 			print(f"Already have data from channel {channel.name}, skipping")
 			await asyncio.sleep(1)
 			continue
+		#Okay, so... turns out sometimes the bot tries to access a channel it isn't allowed to
+		#This isn't a problem if you invite the bot as an admin
+		#But if it isn't an admin, it'll hit a MissionPermission exception
+		#So instead of checking, I'm just gonna eat it with a try:except: and simply skip that channel
+		#TODO: make this code actually check and not just eat exceptions
 		try:
 			if not isinstance(channel, discord.TextChannel):
 				print("Ignoring Voice Channel")
@@ -199,7 +207,7 @@ async def generate_wordclouds(ctx):
 	user = ctx.message.author
 	channel = ctx.message.channel
 
-	if user.id != 694386018668904499:
+	if user.id != bot_owner_id:
 		await ctx.reply(f"Sorry, I only take orders from my creator, {random.choice(owner_titles)}")
 		return
 
@@ -213,7 +221,7 @@ async def post_wordclouds(ctx):
 	user = ctx.message.author
 	channel = ctx.message.channel
 
-	if user.id != 694386018668904499:
+	if user.id != bot_owner_id:
 		await ctx.reply(f"Sorry, I only take orders from my creator, {random.choice(owner_titles)}")
 		return
 

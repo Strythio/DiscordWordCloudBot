@@ -2,7 +2,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, create_engi
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship, backref, sessionmaker, joinedload
 
-engine = create_engine('sqlite:///db.sqlite3', echo=False)
+engine = create_engine('sqlite:///message_db.sqlite3', echo=False)
 
 Base = declarative_base()
 

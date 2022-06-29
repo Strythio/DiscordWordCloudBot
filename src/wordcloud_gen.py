@@ -14,7 +14,7 @@ import json
 #then a wordcloud will not be generated for them
 MESSAGE_COUNT_THRESHOLD = 2000
 #If the member hasn't sent a message in the past x days, exclude them and their words from the results
-EXCLUDE_INACTIVE_LONGER_THAN = datetime.timedelta(days=15)
+EXCLUDE_INACTIVE_LONGER_THAN = datetime.timedelta(days=30)
 
 #Wordcloud settings
 WORDCLOUD_CONFIG = {
@@ -24,7 +24,7 @@ WORDCLOUD_CONFIG = {
     'max_words': 10000,
     'max_font_size': 260,
     'min_font_size': 10,
-    'relative_scaling': 0.65
+    'relative_scaling': 0.65 #Default is .5 which might be better?
 }
 
 def generate_word_clouds():
@@ -230,15 +230,14 @@ def generate_word_clouds():
 
     print("Generating wordcloud images...\n")
 
-    inx = 1
+    idx = 1
     for member_id in member_top_word_freqs.keys():
         #Pull the member from the DB (just need it for their name)
         member = session.query(Member).filter(Member.id==member_id).one()
         first_msg = member.messages.order_by(Message.date_sent).first()
 
-        #Temp just to see how many members qualify
-        print(f"({inx:02d}) Generating wordcloud for '{member.name}'")
-        inx += 1
+        print(f"({idx:02d}) Generating wordcloud for '{member.name}'")
+        idx += 1
 
         wordcloud_path = f"wordclouds/{member.name}.png"
 
