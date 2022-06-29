@@ -13,6 +13,7 @@ import json
 #If a member hasn't said at least this many unique words,
 #then a wordcloud will not be generated for them
 MESSAGE_COUNT_THRESHOLD = 2000
+#If the member hasn't sent a message in the past x days, exclude them and their words from the results
 EXCLUDE_INACTIVE_LONGER_THAN = datetime.timedelta(days=15)
 
 #Wordcloud settings

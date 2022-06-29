@@ -14,3 +14,5 @@ Now that it is on your server and running on your computer:
 3) Then, type :generate_wordclouds
 4) When that's done, go to the channel you'd like them to appear in and type :post_wordclouds
 
+
+To edit the settings used to generate the wordclouds, edit the variables at the beginning of wordcloud_gen.py
