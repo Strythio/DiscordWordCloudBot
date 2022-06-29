@@ -173,6 +173,14 @@ def generate_word_clouds():
     
     top_500_words = set(word for (word, _) in sorted(overall_word_freqs.items(), key=lambda item: item[1], reverse=True)[:500])
 
+    #Calculate which user uses each word the most
+    print("For each word, determining which member uses it the most, and at what freq")
+    word_most_used_by = {}
+    for (word, mean_freq) in overall_word_freqs.items():
+        (biggest_user_id, _) = max(member_word_freqs.items(), key=lambda x: x[1].get(word, 0.0))
+        highest_freq = member_word_freqs[biggest_user_id][word]
+        word_most_used_by[word] = (biggest_user_id, highest_freq)
+
     #This will contain, for each member, a dict of their most frequently used words
     #With some filters applied, see below
     member_top_word_freqs = {}
@@ -210,6 +218,11 @@ def generate_word_clouds():
                 overall_freq = overall_word_freqs[word]
                 if not member_freq > (overall_freq * 3.0):
                     continue
+
+            #Skip all words that another member uses with more than 3x the freq
+            (their_id, their_freq) = word_most_used_by[word]
+            if member_id != their_id and their_freq > (member_freq * 3.0):
+                continue
 
             #Add the word to the selected top words dict,
             #and set the value to the frequency with which it is used by this member
